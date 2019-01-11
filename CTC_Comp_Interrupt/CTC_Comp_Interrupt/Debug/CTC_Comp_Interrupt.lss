@@ -1,0 +1,158 @@
+
+CTC_Comp_Interrupt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000a8  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000011c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000002  00800060  00800060  0000011c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000011c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000014c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000188  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000546  00000000  00000000  000001b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000004cb  00000000  00000000  000006f6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000001eb  00000000  00000000  00000bc1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000048  00000000  00000000  00000dac  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002e6  00000000  00000000  00000df4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000049  00000000  00000000  000010da  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00001123  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1d c0       	rjmp	.+58     	; 0x48 <__vector_6>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 36       	cpi	r26, 0x62	; 98
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	24 d0       	rcall	.+72     	; 0x8c <main>
+  44:	2f c0       	rjmp	.+94     	; 0xa4 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <__vector_6>:
+#include <avr/interrupt.h>
+
+int flag=0;
+
+ISR(TIMER1_COMPA_vect)
+{
+  48:	1f 92       	push	r1
+  4a:	0f 92       	push	r0
+  4c:	0f b6       	in	r0, 0x3f	; 63
+  4e:	0f 92       	push	r0
+  50:	11 24       	eor	r1, r1
+  52:	8f 93       	push	r24
+  54:	9f 93       	push	r25
+	if(flag)
+  56:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+  5a:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+  5e:	89 2b       	or	r24, r25
+  60:	39 f0       	breq	.+14     	; 0x70 <__vector_6+0x28>
+	{
+		PORTB = 1;
+  62:	81 e0       	ldi	r24, 0x01	; 1
+  64:	88 bb       	out	0x18, r24	; 24
+		flag = 0;
+  66:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <_edata+0x1>
+  6a:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <_edata>
+  6e:	07 c0       	rjmp	.+14     	; 0x7e <__vector_6+0x36>
+	}
+	else
+	{
+		PORTB = 0;
+  70:	18 ba       	out	0x18, r1	; 24
+		flag = 1;
+  72:	81 e0       	ldi	r24, 0x01	; 1
+  74:	90 e0       	ldi	r25, 0x00	; 0
+  76:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <_edata+0x1>
+  7a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+	}
+}
+  7e:	9f 91       	pop	r25
+  80:	8f 91       	pop	r24
+  82:	0f 90       	pop	r0
+  84:	0f be       	out	0x3f, r0	; 63
+  86:	0f 90       	pop	r0
+  88:	1f 90       	pop	r1
+  8a:	18 95       	reti
+
+0000008c <main>:
+
+int main()
+{
+	TIMSK = (1 << OCIE1A);					// Compare Match Interrupt Enable
+  8c:	80 e1       	ldi	r24, 0x10	; 16
+  8e:	89 bf       	out	0x39, r24	; 57
+	TCCR1B = (1 << WGM12) | (3 << CS10);	// OCR1A를 Compare Value로 사용. Prescaler=64
+  90:	8b e0       	ldi	r24, 0x0B	; 11
+  92:	8e bd       	out	0x2e, r24	; 46
+	OCR1A = 24999;							// 비교값 OCR1A = 24999
+  94:	87 ea       	ldi	r24, 0xA7	; 167
+  96:	91 e6       	ldi	r25, 0x61	; 97
+  98:	9b bd       	out	0x2b, r25	; 43
+  9a:	8a bd       	out	0x2a, r24	; 42
+	
+	DDRB = 0xFF;
+  9c:	8f ef       	ldi	r24, 0xFF	; 255
+  9e:	87 bb       	out	0x17, r24	; 23
+	
+	sei();
+  a0:	78 94       	sei
+  a2:	ff cf       	rjmp	.-2      	; 0xa2 <main+0x16>
+
+000000a4 <_exit>:
+  a4:	f8 94       	cli
+
+000000a6 <__stop_program>:
+  a6:	ff cf       	rjmp	.-2      	; 0xa6 <__stop_program>

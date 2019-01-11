@@ -1,0 +1,262 @@
+
+monitor_sensor_value.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000013e  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000192  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000192  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001c4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000058  00000000  00000000  00000200  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000073b  00000000  00000000  00000258  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000608  00000000  00000000  00000993  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000031d  00000000  00000000  00000f9b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000a4  00000000  00000000  000012b8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000376  00000000  00000000  0000135c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000035e  00000000  00000000  000016d2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00001a30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	1a c0       	rjmp	.+52     	; 0x36 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+  26:	17 c0       	rjmp	.+46     	; 0x56 <adc_read+0xe>
+  28:	19 c0       	rjmp	.+50     	; 0x5c <adc_read+0x14>
+  2a:	1b c0       	rjmp	.+54     	; 0x62 <adc_read+0x1a>
+  2c:	1d c0       	rjmp	.+58     	; 0x68 <adc_read+0x20>
+  2e:	1f c0       	rjmp	.+62     	; 0x6e <adc_read+0x26>
+  30:	21 c0       	rjmp	.+66     	; 0x74 <adc_read+0x2c>
+  32:	23 c0       	rjmp	.+70     	; 0x7a <adc_read+0x32>
+  34:	25 c0       	rjmp	.+74     	; 0x80 <adc_read+0x38>
+
+00000036 <__ctors_end>:
+  36:	11 24       	eor	r1, r1
+  38:	1f be       	out	0x3f, r1	; 63
+  3a:	cf e5       	ldi	r28, 0x5F	; 95
+  3c:	d4 e0       	ldi	r29, 0x04	; 4
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	cd bf       	out	0x3d, r28	; 61
+  42:	71 d0       	rcall	.+226    	; 0x126 <main>
+  44:	7a c0       	rjmp	.+244    	; 0x13a <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <adc_read>:
+		usart_transmit(buffer[i]);
+	}
+}
+
+void usart_str_transmit(unsigned char str[])
+{
+  48:	88 30       	cpi	r24, 0x08	; 8
+  4a:	91 05       	cpc	r25, r1
+  4c:	d8 f4       	brcc	.+54     	; 0x84 <adc_read+0x3c>
+  4e:	fc 01       	movw	r30, r24
+  50:	ed 5e       	subi	r30, 0xED	; 237
+  52:	ff 4f       	sbci	r31, 0xFF	; 255
+  54:	09 94       	ijmp
+  56:	80 e4       	ldi	r24, 0x40	; 64
+  58:	87 b9       	out	0x07, r24	; 7
+  5a:	14 c0       	rjmp	.+40     	; 0x84 <adc_read+0x3c>
+  5c:	81 e4       	ldi	r24, 0x41	; 65
+  5e:	87 b9       	out	0x07, r24	; 7
+  60:	11 c0       	rjmp	.+34     	; 0x84 <adc_read+0x3c>
+  62:	82 e4       	ldi	r24, 0x42	; 66
+  64:	87 b9       	out	0x07, r24	; 7
+  66:	0e c0       	rjmp	.+28     	; 0x84 <adc_read+0x3c>
+  68:	83 e4       	ldi	r24, 0x43	; 67
+  6a:	87 b9       	out	0x07, r24	; 7
+  6c:	0b c0       	rjmp	.+22     	; 0x84 <adc_read+0x3c>
+  6e:	84 e4       	ldi	r24, 0x44	; 68
+  70:	87 b9       	out	0x07, r24	; 7
+  72:	08 c0       	rjmp	.+16     	; 0x84 <adc_read+0x3c>
+  74:	85 e4       	ldi	r24, 0x45	; 69
+  76:	87 b9       	out	0x07, r24	; 7
+  78:	05 c0       	rjmp	.+10     	; 0x84 <adc_read+0x3c>
+  7a:	86 e4       	ldi	r24, 0x46	; 70
+  7c:	87 b9       	out	0x07, r24	; 7
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <adc_read+0x3c>
+  80:	87 e4       	ldi	r24, 0x47	; 71
+  82:	87 b9       	out	0x07, r24	; 7
+  84:	36 9a       	sbi	0x06, 6	; 6
+  86:	36 99       	sbic	0x06, 6	; 6
+  88:	fe cf       	rjmp	.-4      	; 0x86 <adc_read+0x3e>
+  8a:	84 b1       	in	r24, 0x04	; 4
+  8c:	95 b1       	in	r25, 0x05	; 5
+  8e:	08 95       	ret
+
+00000090 <usart_transmit>:
+  90:	5d 9b       	sbis	0x0b, 5	; 11
+  92:	fe cf       	rjmp	.-4      	; 0x90 <usart_transmit>
+  94:	8c b9       	out	0x0c, r24	; 12
+  96:	08 95       	ret
+
+00000098 <usart_init>:
+
+void usart_init(int baud)
+{
+	int ubrr = 0;
+	// Set baud rate
+	switch(baud) {
+  98:	80 3c       	cpi	r24, 0xC0	; 192
+  9a:	22 e1       	ldi	r18, 0x12	; 18
+  9c:	92 07       	cpc	r25, r18
+  9e:	49 f1       	breq	.+82     	; 0xf2 <usart_init+0x5a>
+  a0:	8c f4       	brge	.+34     	; 0xc4 <usart_init+0x2c>
+  a2:	81 15       	cp	r24, r1
+  a4:	22 ec       	ldi	r18, 0xC2	; 194
+  a6:	92 07       	cpc	r25, r18
+  a8:	a1 f1       	breq	.+104    	; 0x112 <usart_init+0x7a>
+  aa:	24 f4       	brge	.+8      	; 0xb4 <usart_init+0x1c>
+  ac:	81 15       	cp	r24, r1
+  ae:	96 49       	sbci	r25, 0x96	; 150
+  b0:	51 f1       	breq	.+84     	; 0x106 <usart_init+0x6e>
+  b2:	31 c0       	rjmp	.+98     	; 0x116 <usart_init+0x7e>
+  b4:	81 15       	cp	r24, r1
+  b6:	21 ee       	ldi	r18, 0xE1	; 225
+  b8:	92 07       	cpc	r25, r18
+  ba:	39 f1       	breq	.+78     	; 0x10a <usart_init+0x72>
+  bc:	80 36       	cpi	r24, 0x60	; 96
+  be:	99 40       	sbci	r25, 0x09	; 9
+  c0:	b1 f0       	breq	.+44     	; 0xee <usart_init+0x56>
+  c2:	29 c0       	rjmp	.+82     	; 0x116 <usart_init+0x7e>
+  c4:	80 34       	cpi	r24, 0x40	; 64
+  c6:	28 e3       	ldi	r18, 0x38	; 56
+  c8:	92 07       	cpc	r25, r18
+  ca:	b9 f0       	breq	.+46     	; 0xfa <usart_init+0x62>
+  cc:	44 f4       	brge	.+16     	; 0xde <usart_init+0x46>
+  ce:	80 38       	cpi	r24, 0x80	; 128
+  d0:	25 e2       	ldi	r18, 0x25	; 37
+  d2:	92 07       	cpc	r25, r18
+  d4:	81 f0       	breq	.+32     	; 0xf6 <usart_init+0x5e>
+  d6:	81 15       	cp	r24, r1
+  d8:	9c 42       	sbci	r25, 0x2C	; 44
+  da:	c9 f0       	breq	.+50     	; 0x10e <usart_init+0x76>
+  dc:	1c c0       	rjmp	.+56     	; 0x116 <usart_init+0x7e>
+  de:	81 15       	cp	r24, r1
+  e0:	2b e4       	ldi	r18, 0x4B	; 75
+  e2:	92 07       	cpc	r25, r18
+  e4:	61 f0       	breq	.+24     	; 0xfe <usart_init+0x66>
+  e6:	80 38       	cpi	r24, 0x80	; 128
+  e8:	90 47       	sbci	r25, 0x70	; 112
+  ea:	59 f0       	breq	.+22     	; 0x102 <usart_init+0x6a>
+  ec:	14 c0       	rjmp	.+40     	; 0x116 <usart_init+0x7e>
+		case 2400: ubrr = 207; break;
+  ee:	8f ec       	ldi	r24, 0xCF	; 207
+  f0:	13 c0       	rjmp	.+38     	; 0x118 <usart_init+0x80>
+		case 4800: ubrr = 103; break;
+  f2:	87 e6       	ldi	r24, 0x67	; 103
+  f4:	11 c0       	rjmp	.+34     	; 0x118 <usart_init+0x80>
+		case 9600: ubrr = 51; break;
+  f6:	83 e3       	ldi	r24, 0x33	; 51
+  f8:	0f c0       	rjmp	.+30     	; 0x118 <usart_init+0x80>
+		case 14400: ubrr = 34; break;
+  fa:	82 e2       	ldi	r24, 0x22	; 34
+  fc:	0d c0       	rjmp	.+26     	; 0x118 <usart_init+0x80>
+		case 19200: ubrr = 25; break;
+  fe:	89 e1       	ldi	r24, 0x19	; 25
+ 100:	0b c0       	rjmp	.+22     	; 0x118 <usart_init+0x80>
+		case 28800: ubrr = 16; break;
+ 102:	80 e1       	ldi	r24, 0x10	; 16
+ 104:	09 c0       	rjmp	.+18     	; 0x118 <usart_init+0x80>
+		case 38400: ubrr = 12; break;
+ 106:	8c e0       	ldi	r24, 0x0C	; 12
+ 108:	07 c0       	rjmp	.+14     	; 0x118 <usart_init+0x80>
+		case 57600: ubrr = 8; break;
+ 10a:	88 e0       	ldi	r24, 0x08	; 8
+ 10c:	05 c0       	rjmp	.+10     	; 0x118 <usart_init+0x80>
+		case 76800: ubrr = 6; break;
+ 10e:	86 e0       	ldi	r24, 0x06	; 6
+ 110:	03 c0       	rjmp	.+6      	; 0x118 <usart_init+0x80>
+		case 115200: ubrr = 3; break; //It is not recommended to use baud rate faster than 115200 on ATmega8
+ 112:	83 e0       	ldi	r24, 0x03	; 3
+ 114:	01 c0       	rjmp	.+2      	; 0x118 <usart_init+0x80>
+	}
+}
+
+void usart_init(int baud)
+{
+	int ubrr = 0;
+ 116:	80 e0       	ldi	r24, 0x00	; 0
+		case 38400: ubrr = 12; break;
+		case 57600: ubrr = 8; break;
+		case 76800: ubrr = 6; break;
+		case 115200: ubrr = 3; break; //It is not recommended to use baud rate faster than 115200 on ATmega8
+	}
+	UBRRH = (unsigned char)(ubrr >> 8);
+ 118:	10 bc       	out	0x20, r1	; 32
+	UBRRL = (unsigned char)ubrr;
+ 11a:	89 b9       	out	0x09, r24	; 9
+	// Enable receive/transmit function
+	UCSRB = (1<<RXEN) | (1<<TXEN);
+ 11c:	88 e1       	ldi	r24, 0x18	; 24
+ 11e:	8a b9       	out	0x0a, r24	; 10
+	// Configure format of data. each packet consists of 1 start bit + 8 data bits + no parity bit + 1 stop bit
+	UCSRC = (1<<URSEL) | (0<<USBS) | (3<<UCSZ0);
+ 120:	86 e8       	ldi	r24, 0x86	; 134
+ 122:	80 bd       	out	0x20, r24	; 32
+ 124:	08 95       	ret
+
+00000126 <main>:
+#include <avr/io.h>
+#include <string.h>
+
+void adc_init()
+{
+	ADCSRA = 1 << ADEN | 1 << ADPS0 | 1 << ADPS1 | 1 << ADPS2 ;
+ 126:	87 e8       	ldi	r24, 0x87	; 135
+ 128:	86 b9       	out	0x06, r24	; 6
+
+
+int main(void)
+{
+	adc_init();
+	usart_init(9600);
+ 12a:	80 e8       	ldi	r24, 0x80	; 128
+ 12c:	95 e2       	ldi	r25, 0x25	; 37
+ 12e:	b4 df       	rcall	.-152    	; 0x98 <usart_init>
+	while (1) {
+		int data=adc_read(1);
+ 130:	81 e0       	ldi	r24, 0x01	; 1
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	89 df       	rcall	.-238    	; 0x48 <adc_read>
+		usart_transmit(data);
+ 136:	ac df       	rcall	.-168    	; 0x90 <usart_transmit>
+ 138:	fb cf       	rjmp	.-10     	; 0x130 <main+0xa>
+
+0000013a <_exit>:
+ 13a:	f8 94       	cli
+
+0000013c <__stop_program>:
+ 13c:	ff cf       	rjmp	.-2      	; 0x13c <__stop_program>
